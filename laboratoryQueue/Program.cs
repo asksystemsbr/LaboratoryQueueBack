@@ -27,26 +27,14 @@ builder.Services.AddSignalR();
 // Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        builder =>
-        {
-            builder
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()
-                .SetIsOriginAllowed(_ => true); // Cuidado: em produção, especifique as origens permitidas
-        });
+    options.AddPolicy("AllowVueApp", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173") // URL do frontend Vue.js
+               .AllowAnyHeader()                     // Permitir qualquer cabeçalho
+               .AllowAnyMethod()                     // Permitir qualquer método (GET, POST, etc.)
+               .AllowCredentials();                  // Permitir cookies ou autenticação
+    });
 });
-
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowVueApp",
-//        builder => builder
-//            .WithOrigins("http://localhost:5173") // URL do seu app Vue
-//            .AllowAnyMethod()
-//            .AllowAnyHeader()
-//            .AllowCredentials());
-//});
 
 var app = builder.Build();
 
@@ -60,7 +48,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Usar CORS
-app.UseCors("AllowAll");
+app.UseCors("AllowVueApp"); // Aplicar a política de CORS configurada
 
 // Adicionar suporte a roteamento
 app.UseRouting();

@@ -23,6 +23,16 @@ namespace laboratoryqueue.Controllers
             _hubContext = hubContext;
         }
 
+        [HttpOptions]
+        [Route("generate")]
+        public IActionResult Options()
+        {
+            Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type");
+            return Ok();
+        }
+
+
         [HttpPost("generate")]
         public async Task<ActionResult<QueueTicket>> GenerateTicket([FromBody] GenerateTicketDto request)
         {
