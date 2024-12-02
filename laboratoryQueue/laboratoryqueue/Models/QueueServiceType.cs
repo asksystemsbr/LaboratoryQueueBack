@@ -1,5 +1,4 @@
-﻿// Models/QueueServiceType.cs
-namespace laboratoryqueue.Models
+﻿namespace laboratoryqueue.Models
 {
     public class QueueServiceType
     {

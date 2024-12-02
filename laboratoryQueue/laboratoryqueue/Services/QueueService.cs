@@ -37,7 +37,21 @@ namespace laboratoryqueue.Services
             int nextNumber = 1;
             if (lastTicket != null)
             {
-                nextNumber = int.Parse(lastTicket.Number.Substring(1)) + 1;
+                try
+                {
+                    // Verifica se o tipo de senha contém 2 letras e ajusta o índice da substring
+                    int startIndex = lastTicket.Number.Length > 1 && char.IsLetter(lastTicket.Number[0]) && char.IsLetter(lastTicket.Number[1]) ? 2 : 1;
+
+                    // Extrai o número com base no índice calculado e incrementa
+                    nextNumber = int.Parse(lastTicket.Number.Substring(startIndex)) + 1;
+
+                    // Exemplo de formatação do novo número (preservando o prefixo de letras, se houver)
+                    string newNumber = lastTicket.Number.Substring(0, startIndex) + nextNumber.ToString("D3");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao calcular o próximo número: {ex.Message}");
+                }
             }
 
             var ticket = new QueueTicket
