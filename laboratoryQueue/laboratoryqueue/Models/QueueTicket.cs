@@ -11,13 +11,15 @@ namespace laboratoryqueue.Models
         public string Number { get; set; }
         public int ServiceTypeId { get; set; }
         public int? CounterId { get; set; }
+        [JsonPropertyName("status")]
         public string Status { get; set; }
         public DateTime IssuedAt { get; set; }
+        [JsonPropertyName("horario")]
         public DateTime? CalledAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public bool Active { get; set; }
-
+        [JsonPropertyName("tipo")]
         public virtual QueueServiceType ServiceType { get; set; }
         public virtual QueueCounter Counter { get; set; }
     }
