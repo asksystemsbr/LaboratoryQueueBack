@@ -58,7 +58,7 @@ namespace laboratoryqueue.Services
             {
                 Number = $"{serviceTypeCode}{nextNumber:D3}",
                 ServiceTypeId = serviceType.Id,
-                Status = "WAITING",
+                Status = "AGUARDANDO",
                 IssuedAt = DateTime.Now,
                 CreatedAt = DateTime.Now,
                 Active = true
@@ -76,7 +76,7 @@ namespace laboratoryqueue.Services
         {
             var nextTicket = await _context.QueueTickets
                 .Include(t => t.ServiceType)
-                .Where(t => t.Status == "WAITING" && t.Active)
+                .Where(t => t.Status == "AGUARDANDO" && t.Active)
                 .OrderByDescending(t => t.ServiceType.Priority)
                 .ThenBy(t => t.IssuedAt)
                 .FirstOrDefaultAsync();
@@ -99,13 +99,13 @@ namespace laboratoryqueue.Services
             var currentTicket = await _context.QueueTickets
                 .Include(t => t.ServiceType)
                 .Include(t => t.Counter)
-                .Where(t => t.Status == "CALLED")
+                .Where(t => t.Status == "CHAMANDO")
                 .OrderByDescending(t => t.CalledAt)
                 .FirstOrDefaultAsync();
 
             var waitingTickets = await _context.QueueTickets
                 .Include(t => t.ServiceType)
-                .Where(t => t.Status == "WAITING" && t.Active)
+                .Where(t => t.Status == "AGUARDANDO" && t.Active)
                 .OrderByDescending(t => t.ServiceType.Priority)
                 .ThenBy(t => t.IssuedAt)
                 .Take(5)

@@ -66,7 +66,13 @@ namespace laboratoryqueue.Data
 
             // Configuração para QueueCounter
             modelBuilder.Entity<QueueCounter>()
-                .ToTable("queue_counter", "dbo");
+                .ToTable("queue_counter", "dbo")
+                .Property(q => q.CreatedAt)
+                .HasColumnName("created_at");
+
+            modelBuilder.Entity<QueueCounter>()
+                .Property(q => q.UpdatedAt)
+                .HasColumnName("updated_at");
 
             // Configuração para QueueConfig
             modelBuilder.Entity<QueueConfig>()

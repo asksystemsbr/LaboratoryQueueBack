@@ -9,6 +9,7 @@ namespace laboratoryqueue.Models
         public int Id { get; set; }
         [JsonPropertyName("numero")]
         public string Number { get; set; }
+        [JsonPropertyName("serviceTypeId")]
         public int ServiceTypeId { get; set; }
         public int? CounterId { get; set; }
         [JsonPropertyName("status")]
@@ -16,8 +17,11 @@ namespace laboratoryqueue.Models
         public DateTime IssuedAt { get; set; }
         [JsonPropertyName("horario")]
         public DateTime? CalledAt { get; set; }
+        [JsonPropertyName("createdAt")]
         public DateTime CreatedAt { get; set; }
+        [JsonPropertyName("updatedAt")]
         public DateTime? UpdatedAt { get; set; }
+        [JsonPropertyName("active")]
         public bool Active { get; set; }
         [JsonPropertyName("tipo")]
         public virtual QueueServiceType ServiceType { get; set; }
