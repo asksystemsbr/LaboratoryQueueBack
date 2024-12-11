@@ -10,7 +10,7 @@ namespace laboratoryqueue.Services
         {
             // Implementação da impressão do ticket
             // Pode usar System.Drawing.Printing para impressão real
-            Console.WriteLine($"Imprimindo ticket: {ticket.Number}");
+            PrinterHelper.ImprimirSenha(ticket.Number, ticket.ServiceType.Name, ticket.IssuedAt);
         }
     }
 }

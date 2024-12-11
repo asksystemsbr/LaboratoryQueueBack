@@ -10,5 +10,7 @@ namespace laboratoryqueue.Interfaces
         Task<QueueTicket> GenerateTicketAsync(string serviceTypeCode);
         Task<QueueTicket> CallNextAsync(int counterId);
         Task<DisplayDataDto> GetDisplayDataAsync();
+        Task<List<QueueTicket>> GetPendingTicketsAsync();
+        Task ConfirmPrintAsync(int ticketId);
     }
 }

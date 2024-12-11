@@ -64,6 +64,14 @@ namespace laboratoryqueue.Data
                 .WithMany()
                 .HasForeignKey(t => t.CounterId);
 
+            modelBuilder.Entity<QueueTicket>()
+                 .Property(t => t.PrintStatus)
+                 .HasDefaultValue("PENDING");
+
+            modelBuilder.Entity<QueueTicket>()
+                 .Property(e => e.PrintStatus)
+                 .HasColumnName("print_status");
+
             // Configuração para QueueCounter
             modelBuilder.Entity<QueueCounter>()
                 .ToTable("queue_counter", "dbo")

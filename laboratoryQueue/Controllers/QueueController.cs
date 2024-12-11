@@ -5,6 +5,8 @@ using laboratoryqueue.Interfaces;
 using laboratoryqueue.Models;
 using laboratoryqueue.Hubs;
 using laboratoryqueue.DTOs;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace laboratoryqueue.Controllers
 {
@@ -45,6 +47,8 @@ namespace laboratoryqueue.Controllers
         public async Task<ActionResult<DisplayDataDto>> GetDisplayData()
         {
             var data = await _queueService.GetDisplayDataAsync();
+            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            Console.WriteLine(json);
             return Ok(data);
         }
 
@@ -58,5 +62,28 @@ namespace laboratoryqueue.Controllers
             }
             return Ok(ticket);
         }
+
+        [HttpPost("confirm-print")]
+        public async Task<ActionResult> ConfirmPrint([FromBody] int ticketId)
+        {
+            try
+            {
+                await _queueService.ConfirmPrintAsync(ticketId);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("pending-tickets")]
+        public async Task<ActionResult<List<QueueTicket>>> GetPendingTickets()
+        {
+            var tickets = await _queueService.GetPendingTicketsAsync();
+            return Ok(tickets);
+        }
+
+
     }
 }

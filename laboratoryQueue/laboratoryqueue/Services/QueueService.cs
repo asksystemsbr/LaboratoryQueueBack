@@ -117,5 +117,24 @@ namespace laboratoryqueue.Services
                 WaitingTickets = waitingTickets
             };
         }
+
+        public async Task ConfirmPrintAsync(int ticketId)
+        {
+            var ticket = await _context.QueueTickets.FindAsync(ticketId);
+            if (ticket == null) throw new ArgumentException("Ticket não encontrado.");
+
+            ticket.PrintStatus = "PRINTED";
+            _context.QueueTickets.Update(ticket);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<List<QueueTicket>> GetPendingTicketsAsync()
+        {
+            return await _context.QueueTickets
+                  .Include(t => t.ServiceType) // Inclui os dados relacionados de ServiceType
+                  .Where(t => t.PrintStatus == "PENDING" && t.Active)
+                  .ToListAsync();
+        }
     }
 }
