@@ -5,18 +5,24 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "laboratoryqueue", "laboratoryqueue\laboratoryqueue.csproj", "{7A88B458-7348-4189-81E8-74E634433F5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordPrinter", "WindowsForms\PasswordPrinter\PasswordPrinter.csproj", "{1C1EFE8D-9E81-473B-8046-4ACFBBE0AFDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7A88B458-7348-4189-81E8-74E634433F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A88B458-7348-4189-81E8-74E634433F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A88B458-7348-4189-81E8-74E634433F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A88B458-7348-4189-81E8-74E634433F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C1EFE8D-9E81-473B-8046-4ACFBBE0AFDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C1EFE8D-9E81-473B-8046-4ACFBBE0AFDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C1EFE8D-9E81-473B-8046-4ACFBBE0AFDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C1EFE8D-9E81-473B-8046-4ACFBBE0AFDF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
