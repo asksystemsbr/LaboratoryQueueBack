@@ -21,14 +21,27 @@ namespace laboratoryqueue.Services
             _printerService = printerService;
         }
 
-        public async Task<QueueTicket> GenerateTicketAsync(string serviceTypeCode)
+        public async Task<QueueTicket> GenerateTicketAsync(string serviceTypeCode, string? userId = null)
         {
+            // Buscar o tipo de serviço
             var serviceType = await _context.QueueServiceTypes
                 .FirstOrDefaultAsync(st => st.Code == serviceTypeCode);
 
             if (serviceType == null)
                 throw new ArgumentException("Tipo de serviço inválido");
 
+            // Se o UserId for fornecido, verificar se já há uma senha para o mesmo dia
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var existingTicket = await _context.QueueTickets
+                    .Where(t => t.UserId == userId && t.IssuedAt.Date == DateTime.Today)
+                    .FirstOrDefaultAsync();
+
+                if (existingTicket != null)
+                    throw new InvalidOperationException("Você já gerou uma senha hoje.");
+            }
+
+            // Buscar o último ticket gerado para o tipo de serviço
             var lastTicket = await _context.QueueTickets
                 .Where(t => t.ServiceType.Code == serviceTypeCode)
                 .OrderByDescending(t => t.Number)
@@ -44,9 +57,6 @@ namespace laboratoryqueue.Services
 
                     // Extrai o número com base no índice calculado e incrementa
                     nextNumber = int.Parse(lastTicket.Number.Substring(startIndex)) + 1;
-
-                    // Exemplo de formatação do novo número (preservando o prefixo de letras, se houver)
-                    string newNumber = lastTicket.Number.Substring(0, startIndex) + nextNumber.ToString("D3");
                 }
                 catch (Exception ex)
                 {
@@ -54,6 +64,7 @@ namespace laboratoryqueue.Services
                 }
             }
 
+            // Criar novo ticket
             var ticket = new QueueTicket
             {
                 Number = $"{serviceTypeCode}{nextNumber:D3}",
@@ -61,16 +72,20 @@ namespace laboratoryqueue.Services
                 Status = "AGUARDANDO",
                 IssuedAt = DateTime.Now,
                 CreatedAt = DateTime.Now,
-                Active = true
+                Active = true,
+                UserId = userId // Associar o UserId se fornecido
             };
 
+            // Adicionar o ticket ao banco de dados
             _context.QueueTickets.Add(ticket);
             await _context.SaveChangesAsync();
 
+            // Imprimir o ticket (comportamento existente)
             _printerService.PrintTicket(ticket);
 
             return ticket;
         }
+
 
         public async Task<QueueTicket> CallNextAsync(int counterId)
         {

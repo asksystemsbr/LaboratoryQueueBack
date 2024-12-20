@@ -38,9 +38,28 @@ namespace laboratoryqueue.Controllers
         [HttpPost("generate")]
         public async Task<ActionResult<QueueTicket>> GenerateTicket([FromBody] GenerateTicketDto request)
         {
-            var ticket = await _queueService.GenerateTicketAsync(request.ServiceTypeCode);
-            await _hubContext.Clients.All.SendAsync("ReceiveQueueUpdate", ticket);
-            return Ok(ticket);
+            try
+            {
+                // Captura o ID do usuário autenticado, se disponível
+                var userId = User?.FindFirst("id")?.Value;
+
+                // Chama o serviço para gerar a senha
+                var ticket = await _queueService.GenerateTicketAsync(request.ServiceTypeCode, userId);
+
+                return Ok(new
+                {
+                    TicketNumber = ticket.Number,
+                    Message = "Senha gerada com sucesso!"
+                });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Ocorreu um erro inesperado.", Details = ex.Message });
+            }
         }
 
         [HttpGet("display")]

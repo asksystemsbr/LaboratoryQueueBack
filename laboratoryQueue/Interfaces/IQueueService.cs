@@ -7,7 +7,7 @@ namespace laboratoryqueue.Interfaces
 {
     public interface IQueueService
     {
-        Task<QueueTicket> GenerateTicketAsync(string serviceTypeCode);
+        Task<QueueTicket> GenerateTicketAsync(string serviceTypeCode, string? userId);
         Task<QueueTicket> CallNextAsync(int counterId);
         Task<DisplayDataDto> GetDisplayDataAsync();
         Task<List<QueueTicket>> GetPendingTicketsAsync();

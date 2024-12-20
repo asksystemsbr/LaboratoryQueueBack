@@ -40,5 +40,8 @@ namespace laboratoryqueue.Models
 
         [JsonPropertyName("printStatus")]
         public string PrintStatus { get; set; } // Valores possíveis: "PENDING", "PRINTED"
+
+        [JsonPropertyName("userId")]
+        public string? UserId { get; set; } // Novo campo opcional
     }
 }
