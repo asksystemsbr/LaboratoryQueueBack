@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVueApp", builder =>
     {
-        builder.WithOrigins("http://localhost:5173") // URL do frontend Vue.js
+        builder.WithOrigins("http://localhost:5173", "http://localhost:3000") // URL do frontend Vue.js / React
                .AllowAnyHeader()                     // Permitir qualquer cabeçalho
                .AllowAnyMethod()                     // Permitir qualquer método (GET, POST, etc.)
                .AllowCredentials();                  // Permitir cookies ou autenticação

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace laboratoryqueue.Models
@@ -42,6 +43,7 @@ namespace laboratoryqueue.Models
         public string PrintStatus { get; set; } // Valores possíveis: "PENDING", "PRINTED"
 
         [JsonPropertyName("userId")]
+        [Column("user_id")] // Mapeia explicitamente para a coluna user_id
         public string? UserId { get; set; } // Novo campo opcional
     }
 }
